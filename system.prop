@@ -1,0 +1,110 @@
+#
+# system.prop for U8120
+#
+# Graphics and performance
+ro.media.enc.jpeg.quality=100
+ro.media.dec.jpeg.memcap=8000000
+windowsmgr.max_events_per_sec=150
+ro.opengles.version=65537
+ro.sf.lcd_density=120
+view.fading_edge_length=8
+view.touch_slop=15
+view.minimum_fling_velocity=25
+view.scroll_friction=0.008
+persist.sys.use_dithering=0
+persist.sys.purgeable_assets=1
+persist.sys.use_16bpp_alpha=1
+
+# WiFi
+wifi.interface=eth0
+wifi.supplicant_scan_interval=60
+
+# RIL
+rild.libargs=-d/dev/smd0
+rild.libpath=/system/lib/libril-qc-1.so
+ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock
+ro.telephony.call_ring.delay=3000
+
+# USB
+persist.sys.usb.config=mass_storage,adb
+sys.usb.config=mass_storage,adb
+persist.service.adb.enable=1
+
+# System
+ro.kernel.android.checkjni=0
+dalvik.vm.checkjni=false
+dalvik.vm.heapsize=32m
+ro.zram.default=18
+persist.service.zram=1
+ro.compcache.default=18
+sys.checkfs.fat=false
+ro.vold.umsdirtyratio=20
+dalvik.vm.execution-mode=int:jit
+debug.sf.hw=1
+ro.config.disable_hw_accel=true
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.dexopt-flags=m=v,o=y
+dalvik.vm.dexopt-data-only=1
+ro.config.nocheckin=1
+
+# Camera related
+ro.workaround.noautofocus=1
+ro.config.PicMaxSize=3mp
+debug.camcorder.disablemeta=1
+
+# Audio properties
+persist.sys.speaker-attn=0
+persist.sys.fm-attn=0
+persist.sys.headset-attn=0
+
+# Misc.
+ro.com.android.dateformat=dd-MM-yyyy
+ro.com.google.locationfeatures=0
+ro.config.ipcall=true
+ro.config.hw_support_ipcall=true
+ro.tethering.denied=false
+
+# ICS properties
+mobiledata.interfaces=pdp0,rmnet0,rmnet1,rmnet2
+debug.gr.swapinterval=0
+ro.secure=0
+ro.config_datause_iface=rmnet0
+debug.performance.tuning=1
+video.accelerate.hw=1
+ro.product.multi_touch_enabled=true
+ro.product.max_num_touch=5
+ro.config.disable_hw_accel=true
+net.qtaguid_enabled=0
+debug.gr.numframebuffers=2
+debug.composition.type=mdp
+
+# CRT animation speed
+debug.sf.electron_frames=6
+
+# GooManager U8120 Updates
+ro.goo.developerid=joilaroi
+ro.goo.board=u8120
+ro.goo.rom=joilaroi_cm_u8120
+ro.goo.version=6
+
+# Save battery
+pm.sleep_mode=1
+
+# enable software decoder for video
+sys.media.vdec.sw=1
+
+#Makes streaming videos stream faster
+media.stagefright.enable-player=true
+media.stagefright.enable-meta=true
+media.stagefright.enable-scan=true
+#fix HQ
+media.stagefright.enable-http=false
+#fix recording
+media.stagefright.enable-record=true
+
+# Net speed tweaks
+net.tcp.buffersize.default=4096,87380,256960,4096,16384,256960
+net.tcp.buffersize.wifi=4096,87380,256960,4096,16384,256960
+net.tcp.buffersize.umts=4096,87380,256960,4096,16384,256960
+net.tcp.buffersize.gprs=4096,87380,256960,4096,16384,256960
+net.tcp.buffersize.edge=4096,87380,256960,4096,16384,256960

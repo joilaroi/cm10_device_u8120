@@ -1,0 +1,59 @@
+#!/system/bin/sh
+
+# Huawei Userdata2
+echo "try link huawei additional partition"
+if [ -b /dev/block/mtdblock7 ];
+then
+	mkdir /data/userdata2;
+	chown 1000.1000 /data/userdata2;
+	chmod 777 /data/userdata2;
+	mount /dev/block/mtdblock7 /data/cust;
+fi
+
+#check softmac
+if [ -e /system/wifi/softmac ]
+then
+        cp /system/wifi/softmac /data/misc/wifi/softmac
+        sync
+fi
+
+# sdcard speed fix
+if [ -e /sys/devices/virtual/bdi/179:0/read_ahead_kb ];
+then
+    /system/xbin/echo "4096" > /sys/devices/virtual/bdi/179:0/read_ahead_kb;
+fi
+
+#real IO improve from v9.0 !!!!!
+echo "bfq" > /sys/block/mmcblk0/queue/scheduler;
+echo 1 > /sys/block/mmcblk0/queue/rotational;
+for i in 1 2 3 4 5;
+do
+	echo "bfq" > /sys/block/mtdblock$i/queue/scheduler;
+	echo 0 > /sys/block/mtdblock$i/queue/rotational;
+done
+
+# Create userinit.d folder if necessary
+if [ ! -d /data/local/userinit.d ]; then
+    busybox mkdir -p -m 777 /data/local/userinit.d
+    busybox chown system:system /data/local/userinit.d
+fi
+
+# copy dnsmasq.conf to data wifi if it doesnt exists...
+if [ ! -f /data/misc/wifi/hostapd.conf ]; then
+
+  cp /system/etc/wifi/hostapd.conf /data/misc/wifi/hostapd.conf
+
+  chown wifi.wifi /data/misc/wifi/hostapd.conf
+  chmod 666 /data/misc/wifi/hostapd.conf
+
+fi
+
+if [ ! -f /data/misc/wifi/wpa_supplicant.conf ]; then
+
+  cp /system/etc/wifi/wpa_supplicant.conf /data/misc/wifi/wpa_supplicant.conf
+
+  chown wifi.wifi /data/misc/wifi/wpa_supplicant.conf
+  chmod 666 /data/misc/wifi/wpa_supplicant.conf
+
+fi
+

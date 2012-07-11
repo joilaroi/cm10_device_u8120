@@ -1,0 +1,17 @@
+#!/system/bin/sh
+#
+# zram handler
+#
+
+# Enable compcache
+handle_compcache
+insmod /system/lib/modules/zram.ko
+DEV=/dev/block/zram0
+SYSFS_PATH=/sys/block/zram0
+sync;
+echo "3" > /proc/sys/vm/drop_caches
+echo "30" > /proc/sys/vm/swappiness
+# Using 18% of the total memory for zram
+echo 58976502 > /sys/block/zram0/disksize
+mkswap $DEV > /dev/null
+swapon $DEV
