@@ -16,20 +16,18 @@
     <bool name="config_sf_slowBlur">true</bool>
 
     <!-- If this is true, the screen will fade off. -->
-    <bool name="config_animateScreenLights">false</bool>
+    <!-- <bool name="config_animateScreenLights">false</bool> -->
 
     <!-- Values greater or equal to 0 will enable electronbeam screen-on
          animation with the specified delay (in milliseconds), -1 will disable the animation -->
-    <integer name="config_screenOnAnimation">0</integer>
+    <!-- <integer name="config_screenOnAnimation">0</integer> -->
 
     <!-- True will enable the electron beam screen-off animation. -->
-    <bool name="config_screenOffAnimation">false</bool>
+    <!-- <bool name="config_screenOffAnimation">false</bool> -->
 
     <!-- If true, the screen can be rotated via the accelerometer in all 4
          rotations as the default behavior. -->
     <bool name="config_allowAllRotations">true</bool>
-
-    <string name="config_legacyUmsLunFile">/sys/devices/platform/msm_hsusb/gadget/lun0/file</string>
 
     <bool name="config_automatic_brightness_available">false</bool>
 
@@ -89,13 +87,13 @@
     </integer-array>
 
     <!-- Needed for capacitive buttons to work without toggling auto-brightness -->
-    <bool name="config_autoBrightnessButtonKeyboard">false</bool>
+    <!-- <bool name="config_autoBrightnessButtonKeyboard">false</bool> -->
 
     <!-- Component name of the service providing network location support. -->
-    <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
+    <!-- <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string> -->
 
     <!-- Component name of the service providing geocoder API support. -->
-    <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string>
+    <!-- <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string> -->
 
     <string-array translatable="false" name="networkAttributes">
         <item>"wifi,1,1,1,-1,true"</item>
@@ -171,7 +169,7 @@
     <bool name="config_intrusiveNotificationLed">false</bool>
 
     <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">false</bool>
+    <!-- <bool name="config_intrusiveBatteryLed">false</bool> -->
 
     <!-- Hardware 'face' keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
@@ -183,7 +181,7 @@
             16 - App switch
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
-    <integer name="config_deviceHardwareKeys">7</integer>
+    <!-- <integer name="config_deviceHardwareKeys">7</integer> -->
 
     <!-- Indicate whether the SD card is accessible without removing the battery. -->
     <bool name="config_batterySdCardAccessibility">true</bool>
@@ -192,8 +190,14 @@
     <bool name="config_enableLockBeforeUnlockScreen">true</bool>
 
     <!-- Timeout in MS for how long you have to long-press the back key to kill the 		 foreground app. -->
-    <integer name="config_backKillTimeout">1500</integer>
+    <!-- <integer name="config_backKillTimeout">1500</integer> -->
 
     <!-- Enables built-in SIP phone capability -->
     <bool name="config_built_in_sip_phone">true</bool>
+
+    <!-- LUN file to be used by legacy USB manager.
+         The existence of this file will be used to determine in the
+         legacy USB manager should be started. -->
+    <string name="config_legacyUmsLunFile">/sys/devices/platform/msm_hsusb/gadget/lun0/file</string>
+
 </resources>

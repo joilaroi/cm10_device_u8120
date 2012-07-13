@@ -29,14 +29,15 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Graphics 
 PRODUCT_PACKAGES += \
-    gralloc.u8120 \
-    copybit.u8120
+    gralloc.msm7k \
+    copybit.msm7k
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.primary.u8120 \
-    audio_policy.u8120 \
+    audio.primary.msm7k \
+    audio_policy.msm7k \
     audio.a2dp.default \
+    libaudio \
     libaudioutils
 
 # Misc
@@ -68,10 +69,10 @@ PRODUCT_PACKAGES += \
 
 # Other
 PRODUCT_PACKAGES += \
-    lights.u8120 \
     lights.msm7k \
     gps.u8120 \
-    camera.u8120
+    camera.msm7k \
+    libcamera
 
 # APPS
 PRODUCT_PACKAGES += \
@@ -88,6 +89,7 @@ PRODUCT_PACKAGES += \
 # Hardware permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
@@ -168,10 +170,6 @@ PRODUCT_COPY_FILES += \
 # USB autorun.iso for cdrom emulation in kernel driver
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/cdrom/autorun.iso:system/cdrom/autorun.iso
-
-# Bluetooth configuration files
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/lib/libwtnativetask.so:system/lib/libwtnativetask.so
 
 # wifi tether libs
 PRODUCT_COPY_FILES += \
