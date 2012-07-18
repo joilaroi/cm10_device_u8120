@@ -38,7 +38,7 @@ PRODUCT_PACKAGES += \
     audio_policy.msm7k \
     audio.a2dp.default \
     libaudio \
-    libaudioutils
+    libaudioutils \
 
 # Misc
 PRODUCT_PACKAGES += \
@@ -79,7 +79,8 @@ PRODUCT_PACKAGES += \
     Gallery \
     SoundRecorder \
     VoiceDialer \
-    FM
+    FM \
+    Launcher2
 
 # My apps
 PRODUCT_PACKAGES += \
@@ -96,7 +97,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-frameworks/base/native/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
@@ -105,8 +107,12 @@ frameworks/base/native/etc/android.hardware.touchscreen.multitouch.distinct.xml:
 # Vold and USB
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/etc/vold.fstab:system/etc/vold.fstab \
-    $(LOCAL_PATH)/prebuilt/etc/start_usb0.sh:system/etc/start_usb0.sh \
-    $(LOCAL_PATH)/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/prebuilt/etc/start_usb0.sh:system/etc/start_usb0.sh
+
+# Media
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml
 
 # Init files
 PRODUCT_COPY_FILES += \

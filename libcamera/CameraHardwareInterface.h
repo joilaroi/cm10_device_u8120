@@ -20,6 +20,7 @@
 
 #include <binder/IMemory.h>
 #include <utils/RefBase.h>
+#include <gui/ISurface.h>
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 

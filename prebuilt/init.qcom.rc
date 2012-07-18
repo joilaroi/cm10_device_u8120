@@ -2,12 +2,15 @@ import init.qcom.usb.rc
 
 on early-init
     #sdcard
-    export EXTERNAL_STORAGE /mnt/sdcard
+on early-init
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
+    export EXTERNAL_STORAGE /storage/sdcard0
     export SD_EXT_DIRECTORY /sd-ext
-    mkdir /mnt/sdcard 0000 system system
     mkdir /sd-ext 0771 system system
-    # for backwards compatibility
-    symlink /mnt/sdcard /sdcard
+
 
 on fs
     write /sys/block/mtdblock4/queue/read_ahead_kb 4
@@ -162,11 +165,6 @@ on boot
     chown system system /sys/devices/platform/android_usb/composition
     chown system system /sys/devices/platform/android_usb/remote_wakeup
 
-# For qmuxd socket
-    mkdir /data/radio 0770 radio radio
-    chown radio radio 0770 /data/radio
-    chown radio system /dev/pm_monitor
-
 # Sensors permissons
     chmod 0777 /dev/accel
     chmod 0777 /dev/akm8973_aot
@@ -224,6 +222,14 @@ service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
 service abtfilt /system/bin/abtfilt -c -d -z -n
     class main
     user root
+
+# Testing if this fixes the /data/radio chmod requirement
+on property:init.svc.ril-daemon=running
+    chmod 0777 /data/radio/qmux_connect_socket
+
+# Testing if this fixes the /data/radio chmod requirement
+on property:init.svc.qmuxd=running
+    chmod 0777 /data/radio/qmux_connect_socket
     
 # WPA SETTINGS
     setprop wifi.interface eth0
@@ -305,7 +311,7 @@ on property:persist.service.zram=26
     start compcache
 
 # bugreport is triggered by the KEY_VOLUMEUP and KEY_CENTER keycodes
-service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
+service bugreport /system/bin/dumpstate -d -v -o /storage/sdcard0/bugreports/bugreport
     class main
     disabled
     oneshot

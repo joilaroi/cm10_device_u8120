@@ -1,4 +1,5 @@
 /dev/oncrpc/*      		 0660	radio  		radio
+/data/radio/*        		 7777   radio     	radio
 /dev/accel    			 0640	system    	system
 /dev/akm8973_aot  		 0640	compass    	system
 /dev/akm8973_dev  		 0640	compass    	system
