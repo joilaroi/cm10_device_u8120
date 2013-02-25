@@ -1,8 +1,27 @@
-CyanogenMod device configuration for the Huawei U8150
+cm10_device_u8120
+=================
 
-Originally designed by marcnvidic
-Changed, improved and optimized by tilal6991 and alanorth
+CyanogenMod 10 - Jelly Bean - for Huawei U8120
 
-Pre-Setup
-=========
-Execute "extract-files.sh" to extract prebuilt libraries (from a working device)
+Working:
+RIL
+Audio (not sure if audio mic is working durring call)
+Bluetooth (sometimes it wont search)
+Bluetooth tethering
+Data
+Wi-Fi
+Wi-Fi Hotspot (partially working)
+Accelerometer
+Lights
+Sensors
+USB mounting
+OC up to 748mhz
+adb
+
+Not working:
+Camera (it loads but crashes at preview)
+FM Radio (no sources available)
+USB tethering crashes
+HW accel (no GPU hardware on Huawei's U81XX devices)
+
+
