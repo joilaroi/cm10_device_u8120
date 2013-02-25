@@ -44,6 +44,8 @@
 
 #define MSMFB_SET_DISPLAY_CONTRAST _IOW(MSMFB_IOCTL_MAGIC, 135, unsigned int)
 
+#define MSMFB_METADATA_SET  _IOW(MSMFB_IOCTL_MAGIC, 162, struct msmfb_metadata)
+
 #define MDP_IMGTYPE2_START 0x10000
 
 enum {
@@ -81,7 +83,7 @@ enum {
 #define MDP_ROT_270 (MDP_ROT_90|MDP_FLIP_UD|MDP_FLIP_LR)
 #define MDP_DITHER 0x8
 #define MDP_BLUR 0x10
-#define MDP_BLEND_FG_PREMULT 0x0
+#define MDP_BLEND_FG_PREMULT 0x20000
 #define MDP_DEINTERLACE 0x80000000
 #define MDP_SHARPENING  0x40000000
 #define MDP_NO_DMA_BARRIER_START	0x20000000
@@ -93,13 +95,6 @@ enum {
 #define MDP_BLIT_SRC_GEM                0x04000000
 #define MDP_BLIT_DST_GEM                0x02000000
 #define MDP_BLIT_NON_CACHED		0x01000000
-#define MDP_OV_PIPE_SHARE		0x00800000
-#define MDP_DEINTERLACE_ODD		0x00400000
-#define MDP_OV_PLAY_NOWAIT		0x00200000
-#define MDP_SOURCE_ROTATED_90		0x00100000
-#define MDP_MEMORY_ID_TYPE_FB		0x00001000
-#define MDP_DPP_HSIC			0x00080000
-
 #define MDP_TRANSP_NOP 0xffffffff
 #define MDP_ALPHA_NOP 0xff
 
@@ -198,6 +193,24 @@ struct mdp_histogram {
 	uint32_t *r;
 	uint32_t *g;
 	uint32_t *b;
+};
+
+enum {
+	metadata_op_none,
+	metadata_op_base_blend,
+	metadata_op_max
+};
+
+struct mdp_blend_cfg {
+	uint32_t is_premultiplied;
+};
+
+struct msmfb_metadata {
+	uint32_t op;
+	uint32_t flags;
+	union {
+		struct mdp_blend_cfg blend_cfg;
+	} data;
 };
 
 struct mdp_page_protection {

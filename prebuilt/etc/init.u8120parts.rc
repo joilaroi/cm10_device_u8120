@@ -1,0 +1,17 @@
+on boot
+
+on property:persist.sys.ksm=0
+    write /sys/kernel/mm/ksm/run 0
+
+on property:persist.sys.ksm=1
+    write /sys/kernel/mm/ksm/run 1
+
+on property:persist.sys.swap=0
+    exec /system/xbin/swapoff /dev/block/mmcblk0p3
+
+on property:persist.sys.swap=1
+    exec /system/xbin/swapon /dev/block/mmcblk0p3
+	
+on property:persist.sys.nobootsound=1
+    exec /system/bin/bootsound
+

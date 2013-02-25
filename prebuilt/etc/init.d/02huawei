@@ -11,9 +11,13 @@ then
 fi
 
 #check softmac
-if [ -e /system/wifi/softmac ]
+if [ -e /system/wifi/softmac ];
 then
-        cp /system/wifi/softmac /data/misc/wifi/softmac
+        touch /system/wifi/softmac
+        echo 4C:54:`expr $RANDOM % 89 + 10`:`expr $RANDOM % 89 + 10`:`expr $RANDOM % 89 + 10`:`expr $RANDOM % 89 + 10` > /system/wifi/softmac
+        cp /system/wifi/softmac /data/misc/wifi/softmac;
+	chmod 777 /system/wifi/softmac;
+	chmod 777 /data/misc/wifi/softmac;
         sync
 fi
 
@@ -38,15 +42,13 @@ if [ ! -d /data/local/userinit.d ]; then
     busybox chown system:system /data/local/userinit.d
 fi
 
-# copy dnsmasq.conf to data wifi if it doesnt exists...
-if [ ! -f /data/misc/wifi/hostapd.conf ]; then
+# copy hostap.conf to data wifi if it doesnt exists...
+#if [ ! -f /data/misc/wifi/hostapd.conf ]; then
+#  cp /system/etc/wifi/hostapd.conf /data/misc/wifi/hostapd.conf
+#  chown wifi.wifi /data/misc/wifi/hostapd.conf
+#  chmod 666 /data/misc/wifi/hostapd.conf
 
-  cp /system/etc/wifi/hostapd.conf /data/misc/wifi/hostapd.conf
-
-  chown wifi.wifi /data/misc/wifi/hostapd.conf
-  chmod 666 /data/misc/wifi/hostapd.conf
-
-fi
+#fi
 
 if [ ! -f /data/misc/wifi/wpa_supplicant.conf ]; then
 

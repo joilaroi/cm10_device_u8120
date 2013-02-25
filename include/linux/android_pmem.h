@@ -47,7 +47,7 @@
 /* Returns the total size of the pmem region it is sent to as a pmem_region
  * struct (with offset set to 0). 
  */
-#define PMEM_GET_TOTAL_SIZE	0
+#define PMEM_GET_TOTAL_SIZE	_IOW(PMEM_IOCTL_MAGIC, 7, unsigned int)
 /* Revokes gpu registers and resets the gpu.  Pass a pointer to the
  * start of the mapped gpu regs (the vaddr returned by mmap) as the argument.
  */

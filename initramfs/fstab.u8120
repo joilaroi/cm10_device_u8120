@@ -1,0 +1,4 @@
+mtd@system /system yaffs2 ro wait
+mtd@cache /cache yaffs2 noatime,nosuid,nodev,errors=panic wait
+# mtd@userdata /data yaffs2 noatime,nosuid,nodev,errors=panic wait
+#/dev/block/mmcblk0p2 /data ext4 noatime,nodiratime,nosuid,nodev,data=writeback

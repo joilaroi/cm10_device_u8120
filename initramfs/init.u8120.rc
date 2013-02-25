@@ -1,0 +1,347 @@
+import init.u8120.usb.rc
+
+on early-init
+    mount debugfs debugfs /sys/kernel/debug
+    start hwprops
+
+on init
+    # create dirs
+    mkdir /data 0771 system system
+    mkdir /sd-ext 0771 system system
+    mkdir /storage 0775 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
+
+    # setup the global environment
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export SD_EXT_DIRECTORY /sd-ext
+
+on boot
+
+    # Setup boostpulse
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    chown system system /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+    chown system system /sys/devices/system/cpu/cpufreq/ondemand/boostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+    chown system system /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+    chown system system /sys/devices/system/cpu/cpufreq/ondemand/down_differential
+    chmod 0666 /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+    chmod 0666 /sys/devices/system/cpu/cpufreq/ondemand/boostpulse
+    chmod 0666 /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+    chmod 0666 /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+    chmod 0666 /sys/devices/system/cpu/cpufreq/ondemand/down_differential
+
+    # Change permissions (this is for debug only)
+    chmod 444 /proc/cmdline
+
+    # BT
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown system system /sys/module/sco/parameters/disable_esco
+    chmod 0660 /sys/module/bluetooth_power/parameters/power
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0666 /dev/ttyHS0
+    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
+    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+
+    # performance tweaks
+    write /sys/block/mtdblock4/queue/read_ahead_kb 4
+    write /sys/block/mtdblock5/queue/read_ahead_kb 4
+    write /sys/block/mtdblock6/queue/read_ahead_kb 4
+    write /sys/devices/virtual/mtd/mtd4/mtdblock4/queue/read_ahead_kb 4
+    write /sys/devices/virtual/mtd/mtd5/mtdblock5/queue/read_ahead_kb 4
+    write /sys/devices/virtual/mtd/mtd6/mtdblock6/queue/read_ahead_kb 4
+    write /sys/block/mtdblock4/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock5/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock6/bdi/read_ahead_kb 4
+
+    # create WIFI filesystem structure
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/nvcam 0777 system system
+    chown dhcp dhcp /data/misc/dhcp
+
+    setprop wifi.interface eth0
+
+    # Permissions for ril
+    chmod 0777 /dev/oncrpc
+    chmod 0777 /dev/oncrpc/00000000:0
+    chmod 0777 /dev/oncrpc/30000000:ad750db4
+    chmod 0777 /dev/oncrpc/30000002:00020000
+    chmod 0777 /dev/oncrpc/30000003:a7eed910
+    chmod 0777 /dev/oncrpc/3000000a:00010000
+    chmod 0777 /dev/oncrpc/3000000b:00030000
+    chmod 0777 /dev/oncrpc/3000000e:a4de1f0e
+    chmod 0777 /dev/oncrpc/30000012:00010000
+    chmod 0777 /dev/oncrpc/30000013:00020000
+    chmod 0777 /dev/oncrpc/30000014:00010000
+    chmod 0777 /dev/oncrpc/30000015:00010000
+    chmod 0777 /dev/oncrpc/30000015:731f0000
+    chmod 0777 /dev/oncrpc/30000016:9ac802c5
+    chmod 0777 /dev/oncrpc/30000017:00010000
+    chmod 0777 /dev/oncrpc/30000019:821a1945
+    chmod 0777 /dev/oncrpc/3000001a:00010000
+    chmod 0777 /dev/oncrpc/3000001b:fae9727e
+    chmod 0777 /dev/oncrpc/3000001d:ba845703
+    chmod 0777 /dev/oncrpc/3000003c:cc5478d4
+    chmod 0777 /dev/oncrpc/30000048:00010000
+    chmod 0777 /dev/oncrpc/3000005b:a60286b0
+    chmod 0777 /dev/oncrpc/3000005d:00000000
+    chmod 0777 /dev/oncrpc/3000005d:00010000
+    chmod 0777 /dev/oncrpc/3000005d:9202a8e4
+    chmod 0777 /dev/oncrpc/3000005f:00010000
+    chmod 0777 /dev/oncrpc/30000060:00010000
+    chmod 0777 /dev/oncrpc/30000061:00010000
+    chmod 0777 /dev/oncrpc/30000062:00010000
+    chmod 0777 /dev/oncrpc/30000064:00010000
+    chmod 0777 /dev/oncrpc/30000066:00010000
+    chmod 0777 /dev/oncrpc/3000006b:00010000
+    chmod 0777 /dev/oncrpc/30000081:00010000
+    chmod 0777 /dev/oncrpc/30000082:00010000
+    chmod 0777 /dev/oncrpc/30000089:00010000
+    chmod 0777 /dev/oncrpc/3000008c:00040000
+    chmod 0777 /dev/oncrpc/30000091:00020000
+    chmod 0777 /dev/oncrpc/30000093:00000000
+    chmod 0777 /dev/oncrpc/30000094:00000000
+    chmod 0777 /dev/oncrpc/30000095:00000000
+    chmod 0777 /dev/oncrpc/30000096:00000000
+    chmod 0777 /dev/oncrpc/3000fe00:a82d4624
+    chmod 0777 /dev/oncrpc/3000fffd:00000000
+    
+    chown radio system /dev/oncrpc/30000000:ad750db4
+    chown radio system /dev/oncrpc/30000002:00020000
+    chown radio system /dev/oncrpc/30000003:a7eed910
+    chown radio system /dev/oncrpc/3000000a:00010000
+    chown radio system /dev/oncrpc/3000000b:00030000
+    chown radio system /dev/oncrpc/3000000e:a4de1f0e
+    chown radio system /dev/oncrpc/30000012:00010000
+    chown radio system /dev/oncrpc/30000013:00020000
+    chown radio system /dev/oncrpc/30000014:00010000
+    chown radio system /dev/oncrpc/30000015:00010000
+    chown radio system /dev/oncrpc/30000015:731f0000
+    chown radio system /dev/oncrpc/30000016:9ac802c5
+    chown radio system /dev/oncrpc/30000017:00010000
+    chown radio system /dev/oncrpc/30000019:821a1945
+    chown radio system /dev/oncrpc/3000001a:00010000
+    chown radio system /dev/oncrpc/3000001b:fae9727e
+    chown radio system /dev/oncrpc/3000001d:ba845703
+    chown radio system /dev/oncrpc/30000048:00010000
+    chown radio system /dev/oncrpc/3000003c:cc5478d4
+    chown radio system /dev/oncrpc/30000048:00010000
+    chown radio system /dev/oncrpc/3000005b:a60286b0
+    chown radio system /dev/oncrpc/3000005d:00000000
+    chown radio system /dev/oncrpc/3000005d:00010000
+    chown radio system /dev/oncrpc/3000005d:9202a8e4
+    chown radio system /dev/oncrpc/3000005f:00010000
+    chown radio system /dev/oncrpc/30000060:00010000
+    chown radio system /dev/oncrpc/30000061:00010000
+    chown radio system /dev/oncrpc/30000062:00010000
+    chown radio system /dev/oncrpc/30000064:00010000
+    chown radio system /dev/oncrpc/30000066:00010000
+    chown radio system /dev/oncrpc/3000006b:00010000
+    chown radio system /dev/oncrpc/30000081:00010000
+    chown radio system /dev/oncrpc/30000082:00010000
+    chown radio system /dev/oncrpc/30000089:00010000
+    chown radio system /dev/oncrpc/3000008c:00040000
+    chown radio system /dev/oncrpc/30000091:00020000
+    chown radio system /dev/oncrpc/30000093:00000000
+    chown radio system /dev/oncrpc/30000094:00000000
+    chown radio system /dev/oncrpc/30000095:00000000
+    chown radio system /dev/oncrpc/30000096:00000000
+    chown radio system /dev/oncrpc/3000fe00:a82d4624
+    chown radio system /dev/oncrpc/3000fffd:00000000
+    chown radio /dev/smd*
+    mkdir /data/local
+    chmod 0777 /data/local
+    chown radio shell /data/local
+    mkdir /data/local/tmp
+    chmod 0777 /data/local/tmp
+    chown radio shell /data/local/tmp
+
+    import /system/etc/init.u8120parts.rc
+
+    # Configure KSM (Kernel SamePage Mapping)
+    write /sys/kernel/mm/ksm/sleep_millisecs 4000
+    write /sys/kernel/mm/ksm/pages_to_scan 128
+    write /sys/kernel/mm/ksm/run 1
+    
+    # Increase read throughput from sd card
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 2048
+
+    # For qmuxd socket
+    mkdir /data/radio 0770 radio radio
+    chown radio radio 0770 /data/radio
+
+    # SD card polling
+    chown system system /sys/devices/platform/msm_sdcc.1/polling
+    chown system system /sys/devices/platform/msm_sdcc.2/polling
+    chown system system /sys/devices/platform/msm_sdcc.3/polling
+    chown system system /sys/devices/platform/msm_sdcc.4/polling
+
+    # Sensors permissons
+    chmod 0777 /dev/accel
+    chmod 0777 /dev/akm8973_aot
+    chmod 0777 /dev/akm8973_dev
+    chmod 0777 /dev/ofn
+
+    # Input
+    chmod 0777 /dev/input/event0
+    chmod 0666 /dev/input/event1
+    chmod 0666 /dev/input/event2
+    chmod 0666 /dev/input/event3
+
+    # framebuffer permission for copybit
+    chmod 0666 /dev/graphics/fb0
+
+service qmuxd /system/bin/qmuxd
+    class main
+
+# Bluetooth
+on property:init.svc.bluetoothd=running
+    write /sys/devices/virtual/bluetooth/hci0/idle_timeout 7000
+    start abtfilt
+
+on property:init.svc.bluetoothd=stopped
+    stop abtfilt
+
+service hci_qcomm_init /system/bin/log -t qcom-bluetooth -p i "hci_qcomm_init service requested"
+    class main
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service hciattach /system/bin/sh /system/etc/init.bt.sh
+    class main
+    user bluetooth
+    group qcom_oncrpc bluetooth net_bt_admin system
+    disabled
+    oneshot
+
+on property:bluetooth.hciattach=true
+    start hciattach
+
+on property:bluetooth.hciattach=false
+    setprop bluetooth.status off
+
+# Wi-Fi MAC
+on property:wlan.driver.status=loading
+    start setwifimac
+    
+# WPA SETTINGS
+on property:init.svc.wpa_supplicant=stopped
+    stop dhcpcd_eth0
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -W -ieth0 -puse_p2p_group_interface=1 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    socket wpa_eth0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service p2p_supplicant /system/bin/wpa_supplicant -Dwext -W -ieth0 -puse_p2p_group_interface=1 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    socket wpa_eth0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_eth0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service iprenew_bnep0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+# AP mode daemon for Atheros AR600x
+service hostapd /system/bin/hostapd /data/misc/wifi/hostapd.conf
+    user root
+    group root
+    oneshot
+    disabled
+
+# DHCP server for Atheros
+service dhcpcd /system/bin/dhcpcd -d athap0
+    disabled
+    oneshot
+
+# Bluetooth/WLAN coexistance filter for Atheros AR600x
+service abtfilt /system/bin/abtfilt -c -d -z -n
+    class main
+    disabled
+    oneshot
+
+# Wi-Fi MAC
+service setwifimac /system/bin/setwifimac
+    disabled
+    oneshot
+
+# BT MAC
+service setbtmac /system/bin/setbtmac
+    class main
+    oneshot
+
+service hwprops /sbin/hwprops
+    disabled
+    oneshot
+
+# compass/accelerometer daemon
+service akmd /system/bin/akmd2
+    class main
+    user compass
+    group compass misc input
+    oneshot
+
+# Boot sound
+on property:persist.sys.nobootsound=1
+    start bootsound
+
+service bootsound /system/bin/bootsound
+    class main
+    disabled
+    oneshot
+
+on property:persist.service.zram=10
+    start compcache
+
+on property:persist.service.zram=18
+    start compcache
+
+on property:persist.service.zram=26
+    start compcache
+
+# bugreport is triggered by the KEY_VOLUMEUP and KEY_CENTER keycodes
+service bugreport /system/bin/dumpstate -d -v -o /storage/sdcard0/bugreports/bugreport
+    class main
+    disabled
+    oneshot
+    keycodes 115 232

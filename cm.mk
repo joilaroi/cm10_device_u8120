@@ -15,6 +15,9 @@
 # Inherit device configuration
 $(call inherit-product, $(LOCAL_PATH)/u8120.mk)
 
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/tiny.mk)
+
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_mini_phone.mk)
 $(call inherit-product, vendor/cm/config/gsm.mk)
@@ -28,11 +31,6 @@ PRODUCT_MODEL := U8120
 PRODUCT_MANUFACTURER := Huawei
 
 #Set build fingerprint / ID / Prduct Name ect.
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=nakasi BUILD_DISPLAY_ID=JRN84D BUILD_FINGERPRINT=google/nakasi/grouper:4.1/JRN84D/392829:user/release-keys PRIVATE_BUILD_DESC="nakasi-user 4.1 JRN84D 392829 release-key"
-
-# Release name and versioning
-PRODUCT_VERSION_DEVICE_SPECIFIC :=
-
-TARGET_BOOTANIMATION_NAME := vertical-240x320
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=U8120 BUILD_FINGERPRINT=google/occam/mako:4.2.2/JDQ39/573038:user/release-keys PRIVATE_BUILD_DESC="occam-user 4.2.2 JDQ39 573038 release-keys"
 
 TARGET_NO_LIVEWALLPAPERS := true

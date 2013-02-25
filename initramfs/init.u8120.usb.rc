@@ -1,0 +1,34 @@
+on boot
+
+# Setup android gadget
+    write /sys/module/g_android/parameters/serial_number CM10.1-U8120
+
+service huawei_tether /system/bin/sh /system/bin/huawei_tether
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:sys.usb.config=adb
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=mass_storage,adb
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=mass_storage
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=rndis
+    ifup usb0
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=rndis,adb
+    ifup usb0
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
